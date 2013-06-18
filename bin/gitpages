@@ -1,0 +1,10 @@
+#!/usr/bin/env node
+require('iced-coffee-script');
+if(!process.env.REPOSITORIES) throw new Error('REPOSITORIES 未设置');
+var port = Number(process.env.PORT||3000);
+require('http')
+  .createServer(require('../gitpages'))
+  .listen(port, function(e){
+  	if(e) throw e;
+  	console.log('gitpages listening on port ' + port);
+  });

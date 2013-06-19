@@ -19,12 +19,17 @@ app.use (req, res, cb)->
 		account
 		repo
 	] = segs
-	await fs.exists (path.join process.env.REPOSITORIES, account, "#{repo}.git"), defer exists
+	gitPath = path.join process.env.REPOSITORIES, account, "#{repo}.git"
+	await fs.exists gitPath, defer exists
+	if !exists
+		gitPath = path.join process.env.REPOSITORIES, account, "#{repo}/.git"
+		await fs.exists gitPath, defer exists
 	return cb() unless exists
+
 	while heads["#{account}/#{repo}"] == 'checkingout'
 		await setTimeout defer(), 300
 
-	await git.repo (path.join process.env.REPOSITORIES, account, "#{repo}.git"), defer e, gitRepo
+	await git.repo gitPath, defer e, gitRepo
 	return cb e if e
 	await gitRepo.branch 'master', defer e, girBranch
 	return cb e if e
@@ -41,7 +46,7 @@ app.use (req, res, cb)->
 		return cb e if e
 
 
-		await exec "git clone #{path.join process.env.REPOSITORIES, account, repo}.git #{path.join __dirname, 'working', account, repo}", defer e
+		await exec "git clone #{gitPath} #{path.join __dirname, 'working', account, repo}", defer e
 		return cb e if e
 
 		opt = 
@@ -57,3 +62,5 @@ app.use (req, res, cb)->
 	cb()
 
 app.use express.static path.join __dirname, 'working'
+app.use '/components', express.static path.join __dirname, 'components'
+

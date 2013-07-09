@@ -1,0 +1,34 @@
+extends _layout
+block container
+  .navbar
+    .navbar-inner
+      a.brand(href='/#{userUsername}/#{repoName}/')=repoName
+      ul.nav
+        for b in branches
+          li(class=(b.name==branchName)?'active':undefined)
+            a(href='/#{userUsername}/#{repoName}/#{b.name}/')=b.name
+  block container-repo
+    .row-fluid
+      .span10
+        table.table(style='font-size: 1.2em;')
+          thead
+            tr
+              th 版本
+              th 最近更新时间
+              th 最近更新成员
+          tbody
+            for b in branches
+              tr
+                td
+                  a(href='/#{userUsername}/#{repoName}/#{b.name}/')=b.name
+                td #{moment(b.time).format('MM-DD HH:mm:SS')} (#{moment(b.time).fromNow()})
+                td
+                  |#{b.headAuthorName} &lt;
+                  a(href='mailto:#{b.headAuthorEmail}')=b.headAuthorEmail
+                  |&gt;
+      .span2
+        img.img-circle.img-polaroid(src=gravatar.url(repo.headAuthorEmail, {s: 200}),style='width: 100%')
+        .well
+          |#{repo.headAuthorName} &lt;
+          a(href='mailto:#{repo.headAuthorEmail}')=repo.headAuthorEmail
+          |&gt;

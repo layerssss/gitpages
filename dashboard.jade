@@ -1,0 +1,27 @@
+extends _layout
+block container
+  .row-fluid
+    .span3
+    .span3
+      a.btn.btn-primary.btn-block(href='/wiki/')
+        h1 
+          i.icon-edit
+          |Wiki
+    .span3
+      a.btn.btn-info.btn-block(href='/gitlab/')
+        h1
+          i.icon-github 
+          |Gitlab
+    .span3
+  div(style='column-width:600px;')
+    for repo in repos
+      .div(style='margin: 0 1em 1em 0;').clearfix
+        h2
+          a(href='/#{repo.user.username}/#{repo.name}/')=repo.name
+          .pull-left
+            img.img-rounded.img-polaroid(src=gravatar.url(repo.headAuthorEmail, {s: 80}),style='margin: .5em .5em 0;')
+        p 最近更新： #{moment(repo.time).format('MM-DD HH:mm:SS')} (#{moment(repo.time).fromNow()})
+        p
+          |#{repo.headAuthorName} &lt;
+          a(href='mailto:#{repo.headAuthorEmail}')=repo.headAuthorEmail
+          |&gt;

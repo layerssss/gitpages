@@ -1,0 +1,24 @@
+extends repo
+block container-repo
+  :coffeescript
+    $ ->
+      $('[data-qrurl]').each (i, e)->
+        $($(e).attr 'href').find('.rq-holder').qrcode location.href + e.dataset.qrurl
+  .clearfix
+    for page, i in pages
+      .repo
+        .input-append
+          input.span3(type='text',value=page)
+          a.btn(href=page,target='_blank')
+            i.icon-external-link
+          a.btn.btn-info(href='#qr#{i}',data-qrurl=page,data-toggle='modal')
+            i.icon-qrcode
+        iframe(src=page)
+      .modal.hide.fade(id='qr#{i}')
+        .modal-header
+          button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+          h3 扫描二维码在手机上浏览
+        .modal-body
+          .rq-holder
+        .modal-footer
+          button.btn.btn-primary(data-dismiss='modal', aria-hidden='true') 确定

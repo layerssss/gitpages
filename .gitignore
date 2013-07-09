@@ -1,3 +1,4 @@
 /node_modules
 /working
 /components
+.DS_Store

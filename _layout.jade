@@ -1,0 +1,48 @@
+!!!
+html
+  head
+    link(rel="stylesheet", href="/cdnjs/twitter-bootstrap/2.3.2/css/bootstrap.min.css")
+    link(rel="stylesheet", href="/cdnjs/twitter-bootstrap/2.3.2/css/bootstrap-responsive.min.css")
+    
+    script(src="/cdnjs/jquery/2.0.3/jquery.min.js")
+    script(src="/cdnjs/twitter-bootstrap/2.3.2/js/bootstrap.min.js")
+    script(src="/cdnjs/prefixfree/1.0.7/prefixfree.min.js")
+    script(src="/cdnjs/jquery.qrcode/1.0/jquery.qrcode.min.js")
+    link(rel="stylesheet", href="/cdnjs/font-awesome/3.2.0/css/font-awesome.min.css")
+  body
+    :stylus
+      .repo
+        background-image url('/iphone-frame.png')
+        width 508px
+        height 880px
+        position relative
+        float left
+        div
+          position relative
+          left 100px
+          top 40px
+          z-index 100
+        iframe
+          position absolute
+          left 117px
+          top 226px
+          width 343px
+          height 514px
+          border none
+      .rq-holder
+        text-align center
+        canvas
+          margin 4em
+
+    .navbar.navbar-fixed-top.navbar-inverse
+      .navbar-inner
+        .container-fluid
+          a.brand(href='/')
+            i.icon-home
+            |无线用户体验设计中心原型展示平台
+    .container-fluid
+      .visible-desktop(style='height: 60px;')
+      block container
+
+              
+            
